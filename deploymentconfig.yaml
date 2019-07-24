@@ -1,0 +1,32 @@
+kind: "DeploymentConfig"
+apiVersion: "v1"
+metadata:
+  name: "docker-flask-demo-app"
+spec:
+  template: 
+    metadata:
+      labels:
+        name: "docker-flask-demo-app"
+    spec:
+      containers:
+        - name: "docker-flask-demo-app"
+          image: "docker-flask-demo-app:latest"
+          ports:
+            - containerPort: 8080
+              protocol: "TCP"
+  replicas: 1 
+  triggers:
+    - type: "ConfigChange" 
+    - type: "ImageChange" 
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "docker-flask-demo-app"
+        from:
+          kind: "ImageStreamTag"
+          name: "docker-flask-demo-app:latest"
+  strategy: 
+    type: "Rolling"
+  paused: false 
+  revisionHistoryLimit: 2 
+  minReadySeconds: 0

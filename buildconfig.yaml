@@ -1,0 +1,25 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: docker-flask-demo-app
+  labels:
+    application: docker-flask-demo-app
+spec:
+  strategy:
+    type: Docker
+    dockerStrategy:
+      # the base image referenced by the Dockerfile
+      from:
+        kind: DockerImage
+        name: ubuntu:16.04
+  source:
+    type: Git
+    git:
+      ref: docker
+      uri: 'https://github.com/bguruprasad/openshift-sample-app.git'
+  output:
+    to:
+      kind: ImageStreamTag
+      name: docker-flask-demo-app:latest
+  triggers:
+  - type: ImageChange
