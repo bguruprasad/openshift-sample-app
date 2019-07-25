@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    service-consume: docker-flask-demo-service
+  name: docker-flask-demo-route
+spec:
+  host: www.dockertesting.com
+  path: "/guruprasad"
+  to:
+    kind: Service
+    name: docker-flask-demo-service
+  port:
+    targetPort: 8080
