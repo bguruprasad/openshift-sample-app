@@ -1,0 +1,25 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: docker-flask-demo-app
+  labels:
+    application: docker-flask-demo-app
+spec:
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: 'python:3.6'
+        namespace: openshift
+    type: Source
+  source:
+    type: Git
+    git:
+      ref: master
+      uri: 'http://192.168.56.101/root/flask-demo-app.git'
+  output:
+    to:
+      kind: ImageStreamTag
+      name: docker-flask-demo-app:latest
+  triggers:
+  - type: ImageChange
